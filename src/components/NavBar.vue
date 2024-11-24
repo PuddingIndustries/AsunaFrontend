@@ -22,6 +22,7 @@ import {
         <BNavItem :to="{name: 'index'}" active-class="active">Index</BNavItem>
         <BNavItemDropdown text="Configuration" right>
           <BDropdownItem :to="{name: 'config-version'}" active-class="active">Version Management</BDropdownItem>
+          <BDropdownItem :to="{name: 'config-wifi'}" active-class="active">WiFi Configuration</BDropdownItem>
         </BNavItemDropdown>
       </BNavbarNav>
     </BCollapse>

@@ -57,9 +57,9 @@ function stateToBorder(state) {
   }
 }
 
-onMounted(() => {
+onMounted(async () => {
   loading.value = true
-  loadVersions()
+  await loadVersions()
   loading.value = false
 })
 

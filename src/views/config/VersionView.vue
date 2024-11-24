@@ -6,7 +6,7 @@ import {
 } from "bootstrap-vue-next";
 
 import OTACard from "../../components/config/OTACard.vue";
-import OTAForm from "@/components/config/OTAForm.vue";
+import OTAForm from "../../components/config/OTAForm.vue";
 
 </script>
 
