@@ -2,6 +2,7 @@ import {createRouter, createWebHashHistory} from 'vue-router'
 
 import IndexView from '../views/IndexView.vue'
 import ConfigVersionView from '../views/config/VersionView.vue'
+import ConfigLoRaView from '../views/config/LoRaView.vue'
 import ConfigWiFiView from '../views/config/WiFiView.vue'
 import StatusWiFiView from '../views/status/WiFiView.vue'
 
@@ -12,6 +13,11 @@ const router = createRouter({
             path: '/',
             name: 'index',
             component: IndexView,
+        },
+        {
+            path: '/config/lora',
+            name: 'config-lora',
+            component: ConfigLoRaView,
         },
         {
             path: '/config/wifi',

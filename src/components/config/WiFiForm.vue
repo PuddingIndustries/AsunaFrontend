@@ -13,10 +13,10 @@ import {
 
 import {onMounted, ref, reactive} from 'vue'
 
-let loading = ref(true)
-let failure = ref(false)
-let editable = ref(false)
-let config = ref({
+const loading = ref(true)
+const failure = ref(false)
+const editable = ref(false)
+const config = ref({
   ap: {
     enabled: true,
     ssid: '',
@@ -81,7 +81,8 @@ onMounted(async () => {
         <BFormInput id="ap-pass" v-model="config.ap.pass" placeholder="MY PASSWORD" required :disabled="!editable"/>
       </BFormGroup>
       <BFormGroup label="Channel" label-for="ap-chan" label-cols-lg="2" content-cols-lg="10">
-        <BFormInput id="ap-chan" v-model="config.ap.chan" type="number" placeholder="1-12" required :disabled="!editable"/>
+        <BFormInput id="ap-chan" v-model="config.ap.chan" type="number" placeholder="1-12" required
+                    :disabled="!editable"/>
       </BFormGroup>
     </BCollapse>
     <hr/>
@@ -96,8 +97,8 @@ onMounted(async () => {
     </BCollapse>
     <hr/>
     <BButtonGroup>
-    <BButton variant="warning" :disabled="editable" @click="enableEdit()">Edit</BButton>
-    <BButton type="submit" variant="primary" :disabled="!editable">Save</BButton>
+      <BButton variant="warning" :disabled="editable" @click="enableEdit()">Edit</BButton>
+      <BButton type="submit" variant="primary" :disabled="!editable">Save</BButton>
     </BButtonGroup>
   </BForm>
 </template>
