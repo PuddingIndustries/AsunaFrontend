@@ -3,6 +3,7 @@ import {fileURLToPath, URL} from 'node:url'
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
+import viteCompression from 'vite-plugin-compression'
 import Components from 'unplugin-vue-components/vite'
 import {BootstrapVueNextResolver} from 'bootstrap-vue-next'
 
@@ -11,6 +12,10 @@ export default defineConfig({
     plugins: [
         vue(),
         vueDevTools(),
+        viteCompression({
+	  deleteOriginFile: true,
+	  threshold: 0,
+	}),
         Components({
             resolvers: [BootstrapVueNextResolver()],
         }),

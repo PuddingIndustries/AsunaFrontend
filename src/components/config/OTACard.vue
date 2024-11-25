@@ -66,6 +66,7 @@ onMounted(async () => {
 </script>
 
 <template>
+  <BAlert v-if="failure" variant="danger" :model-value="true">Failed to load version information.</BAlert>
   <div class="d-flex justify-content-center" v-if="loading">
     <BSpinner/>
   </div>

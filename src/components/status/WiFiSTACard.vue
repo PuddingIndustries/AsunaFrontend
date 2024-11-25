@@ -4,9 +4,10 @@ import {
   BBadge,
   BListGroup,
   BListGroupItem,
+  BSpinner,
 } from "bootstrap-vue-next";
 
-const props = defineProps(['wifi_status'])
+const props = defineProps(['wifi_status', 'loading'])
 
 </script>
 
@@ -14,15 +15,18 @@ const props = defineProps(['wifi_status'])
   <BListGroup>
     <BListGroupItem class="d-flex justify-content-between align-items-center">
       <span>SSID</span>
-      <BBadge>{{ props.wifi_status.sta.ssid }}</BBadge>
+      <BSpinner v-if="props.loading"></BSpinner>
+      <BBadge v-else>{{ props.wifi_status.sta.ssid }}</BBadge>
     </BListGroupItem>
     <BListGroupItem class="d-flex justify-content-between align-items-center">
       <span>BSSID</span>
-      <BBadge>{{ props.wifi_status.sta.bssid }}</BBadge>
+      <BSpinner v-if="props.loading"></BSpinner>
+      <BBadge v-else>{{ props.wifi_status.sta.bssid }}</BBadge>
     </BListGroupItem>
     <BListGroupItem class="d-flex justify-content-between align-items-center">
       <span>RSSI</span>
-      <BBadge>{{ props.wifi_status.sta.rssi }}dBm</BBadge>
+      <BSpinner v-if="props.loading"></BSpinner>
+      <BBadge v-else>{{ props.wifi_status.sta.rssi }}dBm</BBadge>
     </BListGroupItem>
   </BListGroup>
 </template>
