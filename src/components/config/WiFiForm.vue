@@ -8,15 +8,16 @@ import {
   BFormGroup,
   BFormInput,
   BForm,
-  BSpinner, BAlert,
+  BSpinner,
+  BAlert,
 } from "bootstrap-vue-next";
 
 import {onMounted, ref, reactive} from 'vue'
 
-let loading = ref(true)
-let failure = ref(false)
-let editable = ref(false)
-let config = ref({
+const loading = ref(true)
+const failure = ref(false)
+const editable = ref(false)
+const config = ref({
   ap: {
     enabled: true,
     ssid: '',
