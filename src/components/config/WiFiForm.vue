@@ -45,6 +45,9 @@ async function saveWiFiConfig() {
   })
   if (resp.ok) {
     await resp.json()
+    editable.value = false
+
+    await loadWiFiConfig()
   } else {
     throw new Error(resp.error)
   }

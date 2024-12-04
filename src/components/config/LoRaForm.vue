@@ -12,31 +12,32 @@ import {
   BCollapse,
   BButtonGroup,
   BButton,
+  BInputGroup,
 } from "bootstrap-vue-next";
 
 const bw_options = [
-  {value: 0, text: "125kHz"},
-  {value: 1, text: "250kHz"},
-  {value: 2, text: "500kHz"},
+  {value: 0, text: "125"},
+  {value: 1, text: "250"},
+  {value: 2, text: "500"},
 ]
 
 const sf_options = [
-  {value: 0, text: "SF5"},
-  {value: 1, text: "SF6"},
-  {value: 2, text: "SF7"},
-  {value: 3, text: "SF8"},
-  {value: 4, text: "SF9"},
-  {value: 5, text: "SF10"},
-  {value: 6, text: "SF11"},
-  {value: 7, text: "SF12"},
+  {value: 0, text: "5"},
+  {value: 1, text: "6"},
+  {value: 2, text: "7"},
+  {value: 3, text: "8"},
+  {value: 4, text: "9"},
+  {value: 5, text: "10"},
+  {value: 6, text: "11"},
+  {value: 7, text: "12"},
 
 ]
 
 const cr_options = [
-  {value: 0, text: "4/5"},
-  {value: 1, text: "4/6"},
-  {value: 2, text: "4/7"},
-  {value: 3, text: "4/8"},
+  {value: 0, text: "5"},
+  {value: 1, text: "6"},
+  {value: 2, text: "7"},
+  {value: 3, text: "8"},
 ]
 
 const loading = ref(true)
@@ -56,21 +57,26 @@ const config = ref({
 })
 
 async function loadLoRaConfig() {
-  const resp = fetch('/api/config/lora')
+  const resp = await fetch('/api/config/lora')
   if (resp.ok) {
-    config.value = await resp.json()
+    let data = await resp.json()
+    console.log(data)
+    config.value = data
   } else {
     throw new Error(resp.error)
   }
 }
 
 async function saveLoRaConfig() {
-  const resp = fetch('/api/config/lora', {
+  const resp = await fetch('/api/config/lora', {
     method: 'POST',
     body: JSON.stringify(config.value),
   })
   if (resp.ok) {
     await resp.json()
+    editable.value = false
+
+    await loadLoRaConfig()
   } else {
     throw new Error(resp.error)
   }
@@ -97,25 +103,35 @@ onMounted(async () => {
   <div class="d-flex justify-content-center" v-if="loading">
     <BSpinner/>
   </div>
-  <BForm v-else row @submit="saveLoRaConfig">
+  <BForm v-else row @submit="saveLoRaConfig()">
     <BFormGroup label="Forward RTCM" label-for="lora-enabled" label-cols-lg="2" content-cols-lg="10">
       <BFormCheckbox id="lora-enabled" v-model="config.forward_rtcm" :disabled="!editable">Enable</BFormCheckbox>
     </BFormGroup>
     <BCollapse v-model="config.forward_rtcm" header="Forwarder Configuration">
       <BFormGroup label="Frequency" label-for="lora-freq" label-cols-lg="2" content-cols-lg="10">
-        <BFormInput id="lora-freq" v-model="config.modem_config.freq"></BFormInput>
+        <BInputGroup append="Hz">
+          <BFormInput id="lora-freq" v-model="config.modem_config.freq" :type="'number'"></BFormInput>
+        </BInputGroup>
       </BFormGroup>
       <BFormGroup label="RF Power" label-for="lora-power" label-cols-lg="2" content-cols-lg="10">
-        <BFormInput id="lora-power" v-model="config.modem_config.power"></BFormInput>
+        <BInputGroup append="dBm">
+          <BFormInput id="lora-power" v-model="config.modem_config.power" :type="'number'"></BFormInput>
+        </BInputGroup>
       </BFormGroup>
       <BFormGroup label="Bandwidth" label-for="lora-bw" label-cols-lg="2" content-cols-lg="10">
-        <BFormSelect id="lora-bw" v-model="config.modem_config.bw" :options="bw_options"></BFormSelect>
+        <BInputGroup append="kHz">
+          <BFormSelect id="lora-bw" v-model="config.modem_config.bw" :options="bw_options"></BFormSelect>
+        </BInputGroup>
       </BFormGroup>
       <BFormGroup label="Spread Factor" label-for="lora-sf" label-cols-lg="2" content-cols-lg="10">
-        <BFormSelect id="lora-sf" v-model="config.modem_config.sf" :options="sf_options"></BFormSelect>
+        <BInputGroup prepend="SF">
+          <BFormSelect id="lora-sf" v-model="config.modem_config.sf" :options="sf_options"></BFormSelect>
+        </BInputGroup>
       </BFormGroup>
       <BFormGroup label="Coding Rate" label-for="lora-cr" label-cols-lg="2" content-cols-lg="10">
-        <BFormSelect id="lora-cr" v-model="config.modem_config.cr" :options="cr_options"></BFormSelect>
+        <BInputGroup prepend="4 /">
+          <BFormSelect id="lora-cr" v-model="config.modem_config.cr" :options="cr_options"></BFormSelect>
+        </BInputGroup>
       </BFormGroup>
     </BCollapse>
     <hr/>
